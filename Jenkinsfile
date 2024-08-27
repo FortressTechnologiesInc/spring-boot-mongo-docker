@@ -9,7 +9,12 @@ pipeline {
     environment{
         SCANNER_HOME= tool 'scanner'
     }
-
+ stages {
+        stage('1.0 clean workspace'){
+            steps{
+                cleanWs()
+            }
+        }
     stages {
         stage('Git Checkout ') {
             steps {
