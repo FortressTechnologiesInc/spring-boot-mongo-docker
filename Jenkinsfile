@@ -19,7 +19,7 @@ pipeline {
         
         stage('2.0 Git Checkout') {
             steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/SpringBoot-WebApplication.git'
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/FortressTechnologiesInc/spring-boot-mongo-docker.git'
             }
         }
         
