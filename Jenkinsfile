@@ -105,13 +105,13 @@ pipeline {
                 body: """
                     <html>
                     <body>
-                        <div style="background-color: #FFA07A; padding: 10px; margin-bottom: 10px;">
+                        <div style="background-color: #FFA07A; padding: 15px; margin-bottom: 15px;">
                             <p style="color: white; font-weight: bold;">Project: ${env.JOB_NAME}</p>
                         </div>
-                        <div style="background-color: #90EE90; padding: 10px; margin-bottom: 10px;">
+                        <div style="background-color: #90EE90; padding: 15px; margin-bottom: 15px;">
                             <p style="color: white; font-weight: bold;">Build Number: ${env.BUILD_NUMBER}</p>
                         </div>
-                        <div style="background-color: #87CEEB; padding: 10px; margin-bottom: 10px;">
+                        <div style="background-color: #87CEEB; padding: 15px; margin-bottom: 15px;">
                             <p style="color: white; font-weight: bold;">URL: ${env.BUILD_URL}</p>
                         </div>
                     </body>
