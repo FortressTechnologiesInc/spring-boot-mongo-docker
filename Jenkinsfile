@@ -6,75 +6,119 @@ pipeline {
         maven 'maven'
     }
     
-    environment{
-        SCANNER_HOME= tool 'scanner'
+    environment {
+        SCANNER_HOME = tool 'scanner'
     }
- stages {
-        stage('1.0 clean workspace'){
-            steps{
+    
+    stages {
+        stage('1.0 Clean Workspace') {
+            steps {
                 cleanWs()
             }
         }
-    stages {
-        stage('Git Checkout ') {
+        
+        stage('2.0 Git Checkout') {
             steps {
                 git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/SpringBoot-WebApplication.git'
             }
         }
         
-        stage('Code Compile') {
+        stage('3.0 Code Compile') {
             steps {
-                    sh "mvn compile"
+                sh "mvn compile"
             }
         }
         
-        stage('Run Test Cases') {
+        stage('4.0 Run Test Cases') {
             steps {
-                    sh "mvn test"
+                sh "mvn test"
             }
         }
         
-        stage('Sonarqube Analysis') {
+        stage('5.0 Sonarqube Analysis') {
             steps {
-                    withSonarQubeEnv('sonar') {
-                        sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Sping-Boot-mongo \
+                withSonarQubeEnv('sonar') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectName=Sping-Boot-mongo \
                         -Dsonar.java.binaries=. \
                         -Dsonar.projectKey=Spring-Boot-Mongo '''
-    
                 }
             }
         }
         
-        stage('OWASP Dependency Check') {
+        stage('6.0 Quality Check') {
             steps {
-                   dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
-                   dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+                }
             }
         }
         
-        stage('Maven Build') {
+        stage('7.0 OWASP Dependency Check') {
             steps {
-                    sh "mvn clean compile"
+                dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'DP'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
         
-        stage('Docker Build & Push') {
+        stage('8.0 Trivy FS SCAN') {
             steps {
-                   script {
-                       withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                            sh "docker build -t iscanprint/spingboot:2.0 ."
-                            sh "docker push iscanprint/spingboot:2.0 "
-                            sh "docker rmi -f  iscanprint/spingboot:2.0"
-                        }
-                   } 
+                sh "trivy fs ."
             }
         }
         
-        stage('Docker Image scan') {
+        stage('9.0 Maven Build') {
             steps {
-                    sh "trivy image iscanprint/spingboot:2.0 "
+                sh "mvn clean compile"
             }
         }
         
+        stage('10.0 Docker Build & Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh "docker build -t iscanprint/spingboot:2.0 ."
+                        sh "docker push iscanprint/spingboot:2.0"
+                        sh "docker rmi -f iscanprint/spingboot:2.0"
+                    }
+                }
+            }
+        }
+        
+        stage('11.0 TRIVY Image Scan') {
+            steps {
+                sh "trivy image iscanprint/spingboot:2.0 > trivyimage.txt"
+            }
+        }
+        
+        stage('12.0 Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+    }
+    
+    post {
+        always {
+            emailext attachLog: true,
+                subject: "'${currentBuild.result}'",
+                body: """
+                    <html>
+                    <body>
+                        <div style="background-color: #FFA07A; padding: 10px; margin-bottom: 10px;">
+                            <p style="color: white; font-weight: bold;">Project: ${env.JOB_NAME}</p>
+                        </div>
+                        <div style="background-color: #90EE90; padding: 10px; margin-bottom: 10px;">
+                            <p style="color: white; font-weight: bold;">Build Number: ${env.BUILD_NUMBER}</p>
+                        </div>
+                        <div style="background-color: #87CEEB; padding: 10px; margin-bottom: 10px;">
+                            <p style="color: white; font-weight: bold;">URL: ${env.BUILD_URL}</p>
+                        </div>
+                    </body>
+                    </html>
+                """,
+                to: 'deniferdavies@gmail.com,mokeleke@gmail.com',
+                mimeType: 'text/html'
+        }
     }
 }
