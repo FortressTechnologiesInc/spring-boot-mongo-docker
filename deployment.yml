@@ -15,7 +15,8 @@ metadata:
   name: springappsecrets
 type: Opaque
 data:
-  mongodb-uri: bW9uZ29kYjovL2FkbWluOmFkbWluMTIzQG1vbmdvZC1kZW1vLnAxaWNoLm1vbmdvZC5uZXQvP3JldHJ5V3JpdGVzPXRydWUmdz1tYWpvcml0eQ== 
+  mongodb-uri: bW9uZ29kYitzcnY6Ly9hZG1pbjphZG1pbjEyM0Btb25nb2RiLWRlbW8ucDFqY2gubW9uZ29kYi5uZXQvP3JldHJ5V3JpdGVzPXRydWUmdz1tYWpvcml0eSZhcHBOYW1lPW1vbmdvZGItZGVtbw==
+ 
 
 ---
 apiVersion: apps/v1
