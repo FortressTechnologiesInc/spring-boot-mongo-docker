@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    
+    <!-- Include JavaScript in the footer -->
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+    <title>Spring Boot MongoDB Demo</title>
+    
+    <!-- Inline CSS for background color, font styling, and watermark -->
+    <style>
+        body {
+            background-color: #87CEEB; /* Bright sky-blue color */
+            font-family: Verdana, sans-serif; /* Set Verdana font */
+            font-size: 13px; /* Set font size to 13px */
+            position: relative; /* For positioning the watermark */
+            overflow: hidden; /* Prevent scrolling issues */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Verdana, sans-serif; /* Ensure headings use Verdana font */
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+            z-index: -1; /* Place it behind the main content */
+            font-size: 4em; /* Adjust as necessary */
+            color: rgba(0, 0, 0, 0.1); /* Light grey color with transparency */
+            pointer-events: none; /* Ensure it doesn't interfere with user interactions */
+            white-space: nowrap; /* Prevent line breaks */
+            user-select: none; /* Prevent text selection */
+            text-align: center; /* Center text alignment */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Watermark -->
+    <div class="watermark">OpenIT Global Solutions</div>
+
+    <div class="container">
+        <h1 class="text-center">Spring Boot + MongoDB Demo</h1>
+        <div class="col-md-6">
+            <form name="saveUser" action="/save" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label> 
+                    <input type="text" id="firstName" class="form-control" placeholder="First Name" name="firstName" />
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label> 
+                    <input type="text" id="lastName" class="form-control" placeholder="Last Name" name="lastName">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label> 
+                    <input type="email" id="email" class="form-control" placeholder="Email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-12">
+            <h2>Saved Users</h2>
+            <table id="usersTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <img th:src="@{/img/OpenITGS.jpg}" alt="logo" height="200">
+            </div>
+            <div class="col-md-8">
+                <h4 class="text-center">OpenIT Software Solutions Inc. - Toronto|Canada, Training | Development | Center.</h4>
+                <h4 class="text-center">Contact @ +1-437-234-1271 , +1-437-234-1271</h4>
+                <h5 class="text-center">
+                    Copyrights 2024 by <a href="http://OpenITGS.com/">OpenIT Software Solutions Inc</a>
+                </h5>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $.ajax({
+            url: "/api/users",
+            success: function(response) {
+                $.each(response, function(i, item) {
+                    var row = $("<tr />");
+                    $("#usersTable").append(row);
+
+                    row.append($("<td>" + item.id + "</td>"));
+                    row.append($("<td>" + item.firstName + "</td>"));
+                    row.append($("<td>" + item.lastName + "</td>"));
+                    row.append($("<td>" + item.email + "</td>"));
+                });
+            }
+        });
+    </script>
+</body>
+</html>
