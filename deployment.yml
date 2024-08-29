@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: springappcontainer
-        image: iscanprint/spingboot:2.0  #dockerhandson/spring-boot-mongo
+        image: iscanprint/sboot:2.0  #dockerhandson/spring-boot-mongo
         ports:
         - containerPort: 8080
         env:
