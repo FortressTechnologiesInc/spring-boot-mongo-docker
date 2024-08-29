@@ -42,11 +42,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t iscanprint/springapp:${{ github.sha }} .
+          docker build -t iscanprint/springapp:2.1 .
 
       - name: Push Docker image
         run: |
-          docker push iscanprint/springapp:${{ github.sha }}
+          docker push iscanprint/springapp:2.1
 
       - name: Logout from Docker Hub
         run: docker logout
