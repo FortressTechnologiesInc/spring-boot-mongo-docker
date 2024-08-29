@@ -1,0 +1,57 @@
+# echo -n 'mongodb+srv://admin:admin123@mongodb-demo.p1jch.mongodb.net/?retryWrites=true&w=majority&appName=mongodb-demo' | base64
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springappconfigmap
+data:
+  # You can add other configuration data here if needed
+  # For example, application properties that are not sensitive can be stored here
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: springappsecrets
+type: Opaque
+data:
+  mongodb-uri: bW9uZ29kYjovL2FkbWluOmFkbWluMTIzQG1vbmdvZC1kZW1vLnAxaWNoLm1vbmdvZC5uZXQvP3JldHJ5V3JpdGVzPXRydWUmdz1tYWpvcml0eQ== 
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springappdeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springapp
+  template:
+    metadata:
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springappcontainer
+        image: iscanprint/spingboot:2.0  #dockerhandson/spring-boot-mongo
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_DB_URI
+          valueFrom:
+            secretKeyRef:
+              name: springappsecrets
+              key: mongodb-uri
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springapp
+spec:
+  selector:
+    app: springapp
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: NodePort
