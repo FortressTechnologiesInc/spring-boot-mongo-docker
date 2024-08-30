@@ -22,6 +22,6 @@ public class DemoApp {
 
     @RequestMapping("/")
     public String index() {
-        return "index1.html";
+        return "index.html";
     }
 }
