@@ -42,11 +42,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t iscanprint/springapp:2.2 .
+          docker build -t iscanprint/springapp:3.0 .
 
       - name: Push Docker image
         run: |
-          docker push iscanprint/springapp:2.2
+          docker push iscanprint/springapp:3.0
 
       - name: Logout from Docker Hub
         run: docker logout
