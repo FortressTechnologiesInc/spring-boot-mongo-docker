@@ -6,99 +6,211 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
 <link rel="stylesheet" type="text/css"
-	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 
 <!-- include java script in the footer -->
 <script type="text/javascript"
-	th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 <script type="text/javascript"
-	th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
-<title>Welcome from OpenIT Software Solutions Inc.</title>
+<title>Welcome To Gracious Canada LLC.</title>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to right, #000000, #ffd700);
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar-custom {
+        background-color: rgba(0, 0, 0, 0.7);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .navbar-custom a {
+        color: #ffffff !important;
+    }
+
+    .navbar-custom .navbar-brand {
+        font-weight: bold;
+    }
+
+    .navbar-custom .social-icons a {
+        color: #ffffff;
+        margin-left: 15px;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .navbar-custom .social-icons a:hover {
+        color: #ffd700;
+    }
+
+    .container {
+        max-width: 450px;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        text-align: center;
+    }
+
+    .container h2 {
+        color: #ffffff;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        color: #dddddd;
+        text-align: left;
+        display: block;
+    }
+
+    .form-group input {
+        border: 1px solid #ffd700;
+        background-color: #333;
+        color: #ffffff;
+    }
+
+    .btn {
+        background-color: #ffd700;
+        border: none;
+        color: black;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #ffc700;
+    }
+
+    .custom-link {
+        color: #ffd700;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .custom-link:hover {
+        color: #ffecb3;
+        text-decoration: underline;
+    }
+
+    .footer {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 15px 0;
+        font-size: 14px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+</style>
 </head>
+
 <body>
-	<div class="container">
-		<h1 class="text-center">OpenIT Software Solutions Inc.</h1>
-		<div class="col-md-6">
-			<form name="saveUser" action="/save" method="post"
-				class="form-horizontal">
-				<div class="form-group">
-					<label for="firstName">First Name:</label> <input type="text"
-						id="firstName" class="form-control" placeholder="First Name"
-						name="firstName" />
-				</div>
+    <div class="container">
+        <h1 class="text-center">Gracious Canada LLC.</h1>
+        <div class="col-md-6">
+            <form name="saveUser" action="/save" method="post"
+                class="form-horizontal">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label> 
+                    <input type="text"
+                        id="firstName" class="form-control" placeholder="First Name"
+                        name="firstName" />
+                </div>
 
-				<div class="form-group">
-					<label for="lastName">Last Name:</label> <input type="text"
-						id="lastName" class="form-control" placeholder="Last Name"
-						name="lastName">
-				</div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label> 
+                    <input type="text"
+                        id="lastName" class="form-control" placeholder="Last Name"
+                        name="lastName">
+                </div>
 
-				<div class="form-group">
-					<label for="email">Email:</label> <input type="email" id="email"
-						class="form-control" placeholder="Email" name="email">
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-default">Submit</button>
-				</div>
-			</form>
-		</div>
+                <div class="form-group">
+                    <label for="email">Email:</label> 
+                    <input type="email" id="email"
+                        class="form-control" placeholder="Email" name="email">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </form>
+        </div>
 
+        <div class="col-md-12">
+            <h2>Saved Users</h2>
+            <table id="usersTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-		<div class="col-md-12">
-			<h2>Saved Users</h2>
-			<table id="usersTable" class="table table-striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
+        <div class="row-md-8">
+            <div class="col-md-3">
+                <img th:src="@{/img/OpenITGS.jpg}" alt="logo" height="200">
+            </div>
+            <div class="col-md-8">
+                <h4 class="text-center">Gracious Canada LLC. - Toronto|Canada,
+                    Training | Development | Center.</h4>
+                <h4 class="text-center">Contact @ +1-437-234-1271 ,
+                    +1-437-234-1271</h4>
+                <h5 class="text-center">
+                    Copyrights 2024 by 
+                    <a href="http://graciouscanada.com/" class="custom-link">Gracious Canada LLC.</a>
+                </h5>
+            </div>
+        </div>
+    </div>
 
+    <div class="footer">
+        © 2024 Gracious Canada LLC. All rights reserved.
+    </div>
 
-		<div class="row-md-8">
-			<div class="col-md-3">
-				<img th:src="@{/img/OpenITGS.jpg}" alt="logo" height="200">
-			</div>
-			<div class="col-md-8">
-				<h4 class="text-center">OpenIT Software Solutions Inc. - Toronto|Canada,
-					Training | Development | Center.</h4>
-				<h4 class="text-center">Contact @ +1-437-234-1271 ,
-					+1-437-234-1271</h4>
-				<h5 class="text-center">
-					Copyrights 2024 by <a href="http://OpenITGS.com/">OpenIT 
-						Software Solutions Inc</a>
-				</h5>
-			</div>
-		</div>
+    <script>
+        $.ajax({
+            url : "/api/users",
+            success : function(response) {
+                $.each(response, function(i, item) {
+                    var row = $("<tr />");
+                    $("#usersTable").append(row);
 
-	</div>
-
-	<script>
-		$.ajax({
-			url : "/api/users",
-
-			success : function(response) {
-				$.each(response, function(i, item) {
-					var row = $("<tr />");
-					$("#usersTable").append(row);
-
-					row.append($("<td>" + item.id + "</td>"));
-					row.append($("<td>" + item.firstName + "</td>"));
-					row.append($("<td>" + item.lastName + "</td>"));
-					row.append($("<td>" + item.email + "</td>"));
-
-				});
-			}
-		})
-	</script>
+                    row.append($("<td>" + item.id + "</td>"));
+                    row.append($("<td>" + item.firstName + "</td>"));
+                    row.append($("<td>" + item.lastName + "</td>"));
+                    row.append($("<td>" + item.email + "</td>"));
+                });
+            }
+        })
+    </script>
 </body>
 </html>
